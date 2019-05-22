@@ -7,18 +7,16 @@ import (
 
 // TODO I can do better
 func GoString(data unsafe.Pointer) string {
-	var count uintptr
-	for {
-		pC := uintptr(data) + count
-		c := *(*uint8)(unsafe.Pointer(pC))
-		if c == 0 {
-			break
-		}
-		count++
+	p0 := uintptr(data)
+	p := p0
+	c := *(*uint8)(unsafe.Pointer(p))
+	for c != 0 {
+		p++
+		c = *(*uint8)(unsafe.Pointer(p))
 	}
 	sh := &reflect.StringHeader{
 		Data: uintptr(data),
-		Len:  int(count),
+		Len:  int(p - p0),
 	}
 	return *((*string)(unsafe.Pointer(sh)))
 }
