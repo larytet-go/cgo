@@ -5,7 +5,8 @@ import (
 	"unsafe"
 )
 
-// TODO I can do better
+// TODO Probably Ok for short strings, but I can do better
+// for an average case
 func StrLen(data unsafe.Pointer) int {
 	p := uintptr(data)
 	c := *(*uint8)(unsafe.Pointer(p))
