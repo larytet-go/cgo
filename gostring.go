@@ -6,7 +6,7 @@ import (
 )
 
 // TODO I can do better when
-func goString(data unsafe.Pointer) string {
+func GoString(data unsafe.Pointer) string {
 	var count uintptr
 	for {
 		pC := uintptr(data) + count
