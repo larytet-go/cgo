@@ -7,8 +7,7 @@ import (
 
 // TODO I can do better
 func GoString(data unsafe.Pointer) string {
-	p0 := uintptr(data)
-	p := p0
+	p := uintptr(data)
 	c := *(*uint8)(unsafe.Pointer(p))
 	for c != 0 {
 		p++
@@ -16,7 +15,7 @@ func GoString(data unsafe.Pointer) string {
 	}
 	sh := &reflect.StringHeader{
 		Data: uintptr(data),
-		Len:  int(p - p0),
+		Len:  int(p - uintptr(data)),
 	}
 	return *((*string)(unsafe.Pointer(sh)))
 }
