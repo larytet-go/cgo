@@ -22,7 +22,8 @@ func StrLen(data unsafe.Pointer) int {
 // The function does not allocate memory. Make sure
 // that the reference data remains valid through the
 // life cycle of the resulting sting
-// TODO causes memoty leak? How does it work?
+// TODO causes memoty leak? Will GC free the same memory twice?
+// How does it work?
 func GoString(data unsafe.Pointer) string {
 	sh := &reflect.StringHeader{
 		Data: uintptr(data),
