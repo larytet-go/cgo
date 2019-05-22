@@ -1,6 +1,7 @@
 package cgo
 
 import (
+	"reflect"
 	"testing"
 	"unsafe"
 )
@@ -18,5 +19,23 @@ func TestZero(t *testing.T) {
 	s := GoString(unsafe.Pointer(&data))
 	if s != "" {
 		t.Errorf("Failed to convert empty string, got %s", s)
+	}
+}
+
+func TestClone(t *testing.T) {
+	type Data struct {
+		x int
+		y int
+	}
+	i1 := &Data{
+		x: 1,
+		y: 2,
+	}
+	d := Data{}
+	i2 := CloneBytes(unsafe.Pointer(i1), int(unsafe.Sizeof(d)))
+	data := ((*reflect.SliceHeader)(unsafe.Pointer(&i2))).Data
+	i3 := (*Data)(unsafe.Pointer(data))
+	if !reflect.DeepEqual(i1, i3) {
+		t.Errorf("Failed to clone %v instead of %v", *i1, *i3)
 	}
 }
