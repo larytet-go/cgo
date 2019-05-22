@@ -31,3 +31,16 @@ func GoString(data unsafe.Pointer) string {
 	}
 	return *((*string)(unsafe.Pointer(sh)))
 }
+
+func CloneBytes(data unsafe.Pointer, dataSize int) []byte {
+	sliceHeader := &reflect.SliceHeader{
+		Len:  dataSize,
+		Cap:  dataSize,
+		Data: uintptr(data),
+	}
+	src := (*[]byte)(unsafe.Pointer(sliceHeader))
+	dst := make([]byte, dataSize)
+	copy(dst, *src)
+
+	return dst
+}
