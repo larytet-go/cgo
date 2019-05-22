@@ -5,6 +5,7 @@ import (
 	"unsafe"
 )
 
+// StrLen returns number of sequential non-zero bytes
 // TODO Probably Ok for short strings, but I can do better
 // for an average case
 func StrLen(data unsafe.Pointer) int {
@@ -17,7 +18,7 @@ func StrLen(data unsafe.Pointer) int {
 	return int(p - uintptr(data))
 }
 
-// GoString typecast pointer to go.string
+// GoString typecasts pointer to go.string
 // The function does not allocate memory. Make sure
 // that the reference data remains valid through the
 // life cycle of the resulting sting
