@@ -1,4 +1,4 @@
-package gostring
+package cgo
 
 import (
 	"reflect"
