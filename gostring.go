@@ -1,11 +1,11 @@
 package gostring
 
 import (
-  "reflect"
-  "unsafe"
+	"reflect"
+	"unsafe"
 )
 
-// TODO I can do better when
+// TODO I can do better
 func GoString(data unsafe.Pointer) string {
 	var count uintptr
 	for {
