@@ -1,13 +1,12 @@
 package gostring
 
 import (
-  "unsafe"
   "reflect"
+  "unsafe"
 )
 
 // TODO I can do better when
 func goString(data unsafe.Pointer) string {
-	chars := (*uint8)(data)
 	var count uintptr
 	for {
 		pC := uintptr(data) + count
