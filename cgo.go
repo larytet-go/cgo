@@ -32,7 +32,23 @@ func GoString(data unsafe.Pointer) string {
 	return *((*string)(unsafe.Pointer(sh)))
 }
 
+// CloneString copies C string to the Go string
+func CloneString(data unsafe.Pointer) string {
+	sh := &reflect.StringHeader{
+		Data: uintptr(data),
+		Len:  StrLen(data),
+	}
+	s := (*string)(unsafe.Pointer(sh))
+	return string([]byte(*s))
+}
+
+// CloneBytes is backward compatibility
 func CloneBytes(data unsafe.Pointer, dataSize int) []byte {
+	return GoBytes(data, dataSize)
+}
+
+// GoBytes allocates a Go slice, copy the data
+func GoBytes(data unsafe.Pointer, dataSize int) []byte {
 	sliceHeader := &reflect.SliceHeader{
 		Len:  dataSize,
 		Cap:  dataSize,

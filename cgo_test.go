@@ -22,6 +22,14 @@ func TestStringZero(t *testing.T) {
 	}
 }
 
+func TestStringNonzeroClone(t *testing.T) {
+	var data [4]uint8 = [4]uint8{0x30, 0x31, 0x32, 0x00}
+	s := CloneString(unsafe.Pointer(&data))
+	if s != "012" {
+		t.Errorf("Failed to convert '%s' instead of '%s'", s, "012")
+	}
+}
+
 func TestClone(t *testing.T) {
 	type Data struct {
 		x int
@@ -32,7 +40,7 @@ func TestClone(t *testing.T) {
 		y: 2,
 	}
 	d := Data{}
-	i2 := CloneBytes(unsafe.Pointer(i1), int(unsafe.Sizeof(d)))
+	i2 := GoBytes(unsafe.Pointer(i1), int(unsafe.Sizeof(d)))
 	data := ((*reflect.SliceHeader)(unsafe.Pointer(&i2))).Data
 	i3 := (*Data)(unsafe.Pointer(data))
 	if !reflect.DeepEqual(i1, i3) {
